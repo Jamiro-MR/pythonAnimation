@@ -80,4 +80,12 @@ def show_loading_bar():
     # Display ASCII art with typewriter effect
     typewriter_effect(ascii_art)
 
+    # Formatting for "[SALUTE]"
+    end_sequence = "\033[31m\033[1m[HELLO_WORLD]\033[0m"
+    # Delay
+    end_delay = 0.1
+
+    # Display init_sequence with typewriter effect
+    typewriter_effect(end_sequence)
+
 show_loading_bar()
