@@ -1,7 +1,7 @@
 import time
 import pyttsx3
 
-words = ["[REBOOTED]", "[REARMED]", "[RECHARGED]", "[REBUILT]", "[RESURRECTED!]"]
+words = ["[RE-BOOTED]", "[RE-ARMED]", "[RE-CHARGED]", "[RE-BUILT]", "[RESURRECTED!]"]
 
 # Initialize the speech engine
 engine = pyttsx3.init()
