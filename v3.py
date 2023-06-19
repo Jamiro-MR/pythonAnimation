@@ -7,9 +7,12 @@ words = ["[REBOOTED]", "[REARMED]", "[RECHARGED]", "[REBUILT]", "[RESURRECTED!]"
 engine = pyttsx3.init()
 
 def typewriter_effect(text):
-    for char in text:
-        print(char, end='', flush=True)
-        time.sleep(0.05)  # Delay between each character
+    lines = text.split("\n")
+    for line in lines:
+        for char in line:
+            print(char, end='', flush=True)
+            time.sleep(0.05)  # Delay between each character
+        print()  # New line after each line of text
 
 def show_loading_bar():
     width = 40  # Width of the loading bar
@@ -24,7 +27,6 @@ def show_loading_bar():
 
     # Display introduction with typewriter effect
     typewriter_effect(intro_text)
-    print()  # New line after the introduction
 
     for word in words:
         print("Loading...")
@@ -55,14 +57,11 @@ def show_loading_bar():
     # Delay in seconds between printing each character for init_sequence
     init_delay = 0.1
 
-    for char in init_sequence:
-        print(char, end='', flush=True)
-        time.sleep(init_delay)
-
-    print()
+    # Display init_sequence with typewriter effect
+    typewriter_effect(init_sequence)
 
     # ASCII
-    print(r"""
+    ascii_art = """
     ⠄⣾⣿⡇⢸⣿⣿⣿⠄⠈⣿⣿⣿⣿⠈⣿⡇⢹⣿⣿⣿⡇⡇⢸⣿⣿⡇⣿⣿⣿
     ⢠⣿⣿⡇⢸⣿⣿⣿⡇⠄⢹⣿⣿⣿⡀⣿⣧⢸⣿⣿⣿⠁⡇⢸⣿⣿⠁⣿⣿⣿
     ⢸⣿⣿⡇⠸⣿⣿⣿⣿⡄⠈⢿⣿⣿⡇⢸⣿⡀⣿⣿⡿⠸⡇⣸⣿⣿⠄⣿⣿⣿
@@ -76,6 +75,9 @@ def show_loading_bar():
     ⡸⢿⣿⡀⠄⠄⠈⠻⠿⠿⠿⠿⠿⠿⠋⣠⣾⣿⠟⠋⠄⣀⣴⣿⡿⠟⣿⣿⣿⣿
     ⢇⣿⣿⣇⣀⡀⠄⠄⢀⣀⠄⠄⣀⣴⣿⣿⠟⠄⢠⣾⣿⡿⠁⢀⣾⣿⣿⣿⣿⣿
     ⢸⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-    """)
+    """
+
+    # Display ASCII art with typewriter effect
+    typewriter_effect(ascii_art)
 
 show_loading_bar()
