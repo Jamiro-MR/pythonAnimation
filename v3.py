@@ -1,12 +1,14 @@
 import time
-import sys
+import pyttsx3
 
 words = ["[REBOOTED]", "[REARMED]", "[RECHARGED]", "[REBUILT]", "[RESURRECTED!]"]
 
+# Initialize the speech engine
+engine = pyttsx3.init()
+
 def typewriter_effect(text):
     for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
+        print(char, end='', flush=True)
         time.sleep(0.05)  # Delay between each character
 
 def show_loading_bar():
@@ -33,7 +35,16 @@ def show_loading_bar():
             print(loading_bar, end='\r')
             time.sleep(duration)
 
-        print(f"\n\033[35m{word}\033[0m\n")  # Display
+        print(f"\n\033[35m{word}\033[0m")  # Display word
+
+        # Set the voice to a robotic one
+        voices = engine.getProperty('voices')
+        engine.setProperty('voice', voices[2].id)  # Index from 0 to 2 decides the voice(2 is the best)
+
+        # Speak the word using text-to-speech
+        engine.say(word)
+        engine.runAndWait()
+
         time.sleep(1)  # Pause after displaying the word
 
     # New line after the boot sequence
@@ -45,8 +56,7 @@ def show_loading_bar():
     init_delay = 0.1
 
     for char in init_sequence:
-        sys.stdout.write(char)
-        sys.stdout.flush()
+        print(char, end='', flush=True)
         time.sleep(init_delay)
 
     print()
@@ -56,18 +66,16 @@ def show_loading_bar():
     ⠄⣾⣿⡇⢸⣿⣿⣿⠄⠈⣿⣿⣿⣿⠈⣿⡇⢹⣿⣿⣿⡇⡇⢸⣿⣿⡇⣿⣿⣿
     ⢠⣿⣿⡇⢸⣿⣿⣿⡇⠄⢹⣿⣿⣿⡀⣿⣧⢸⣿⣿⣿⠁⡇⢸⣿⣿⠁⣿⣿⣿
     ⢸⣿⣿⡇⠸⣿⣿⣿⣿⡄⠈⢿⣿⣿⡇⢸⣿⡀⣿⣿⡿⠸⡇⣸⣿⣿⠄⣿⣿⣿
-    ⢸⣿⡿⠷⠄⠿⠿⠿⠟⠓⠰⠘⠿⣿⣿⡈⣿⡇⢹⡟⠰⠦⠁⠈⠉⠋⠄⠻⢿⣿
-    ⢨⡑⠶⡏⠛⠐⠋⠓⠲⠶⣭⣤⣴⣦⣭⣥⣮⣾⣬⣴⡮⠝⠒⠂⠂⠘⠉⠿⠖⣬
-    ⠈⠉⠄⡀⠄⣀⣀⣀⣀⠈⢛⣿⣿⣿⣿⣿⣿⣿⣿⣟⠁⣀⣤⣤⣠⡀⠄⡀⠈⠁
-    ⠄⠠⣾⡀⣾⣿⣧⣼⣿⡿⢠⣿⣿⣿⣿⣿⣿⣿⣿⣧⣼⣿⣧⣼⣿⣿⢀⣿⡇⠄
-    ⡀⠄⠻⣷⡘⢿⣿⣿⡿⢣⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣜⢿⣿⣿⡿⢃⣾⠟⢁⠈
-    ⢃⢻⣶⣬⣿⣶⣬⣥⣶⣿⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣷⣶⣶⣾⣿⣷⣾⣾⢣
-    ⡄⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠘
-    ⣿⡐⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢠⢃
-    ⣿⣷⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⢀⠆⣼
-    ⣿⣿⣷⡀⠄⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠋⠠⠂⢀⣾⣿
-    ⣿⣿⣿⣧⠄⠄⢵⢠⣈⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢋⡁⢰⠏⠄⠄⣼⣿⣿
-    ⢻⣿⣿⣿⡄⢢⠨⠄⣯⠄⠄⣌⣉⠛⠻⠟⠛⢋⣉⣤⠄⢸⡇⣨⣤⠄⢸⣿⣿⣿
+    ⢸⣿⡿⠷⠄⠿⠿⠿⠟⠓⠰⠘⠿⣿⣿⡈⣿⡇⢹⡟⠰⠦⠁⠈⠿⠿⠃⠿⣿⡿
+    ⡇⢸⠃⢀⣴⡆⠄⢀⣀⠄⣀⣀⡀⠙⣿⡇⢸⣿⣀⣀⡀⠄⢀⣀⠄⢀⣠⣤⣾⣿
+    ⢃⠈⠲⣿⡿⠁⢰⣿⣿⡄⠈⠻⣿⣿⠃⢸⣿⡇⢸⣿⣿⡇⠘⢿⣿⣿⠟⣿⣿⣿
+    ⢿⣄⠈⠻⢿⣦⡈⠿⢿⣿⡇⢠⣾⣿⠄⠸⣿⡇⢸⣿⣿⡇⢀⣾⡿⠋⢸⣿⡿⠁
+    ⡏⠈⢿⣶⣤⡈⠻⠿⠟⠁⠈⠻⠿⠇⢰⣿⣿⣿⣿⠿⠇⣰⣿⣿⠟⠁⢸⠟⠁
+    ⡇⢀⠘⠿⣿⣿⣦⣄⣀⡀⠄⠄⠄⢀⣿⣿⣿⠟⠁⢀⣿⣿⣿⡟⠁⣠⣾
+    ⢳⣤⡄⠈⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠋⢀⣾⣿⣿⠿⠋⣀⣾⣿⣿⣷⣿⣿
+    ⡸⢿⣿⡀⠄⠄⠈⠻⠿⠿⠿⠿⠿⠿⠋⣠⣾⣿⠟⠋⠄⣀⣴⣿⡿⠟⣿⣿⣿⣿
+    ⢇⣿⣿⣇⣀⡀⠄⠄⢀⣀⠄⠄⣀⣴⣿⣿⠟⠄⢠⣾⣿⡿⠁⢀⣾⣿⣿⣿⣿⣿
+    ⢸⣿⣿⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
     """)
 
 show_loading_bar()
